@@ -1,0 +1,52 @@
+.form-form {
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.form-form legend {
+    font-size: 20px;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.form-form label {
+    margin: 2px 0px 2px 0px;
+    font-weight: 600;
+}
+
+.form-form p {
+    margin: 5px 0px 5px 0px;
+}
+
+.form-form .form-control {
+    position: relative;
+    box-sizing: border-box;
+    /* height: auto; */
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: -1px;
+}
+
+/* .form-form input[type="text" ] {
+    margin-bottom: -1px;
+}
+
+.form-form input[type="email"] {
+    margin-bottom: -1px;
+} */
+
+.form-form input[name="confirm_password"] {
+    margin-bottom: 10px;
+}
+
+.error {
+    color: #e34545;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+.success {
+    color: #115611;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}

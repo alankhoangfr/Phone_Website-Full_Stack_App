@@ -1,0 +1,60 @@
+<div id="itemInfo">
+
+  <h3 id="heading"> <%=info.title %></h3>
+
+  <div class="row">
+    <div class="col-md-6">
+      <img class="phoneImage" src= <%=info.image %> onerror="this.onerror=null;this.src='/images/phone_default_images/default.png';" alt="" style="width: 12em;">
+    </div>
+    <div class="col-md-6">
+      <p id="itemId" class="hide"> <%=info._id %> </p>
+      <p> Brand: <%=info.brand %></p>
+      <p> Stock:  <span id="itemStock"> <%=info.stock %></span></p>
+      <p> Seller: <%= info.seller %></p>
+      <p> Price:<span id="itemPrice"> <%=info.price %></span></p>
+      <p> Quantity in cart:<span id="quantityInCart"> 0 </span></p>
+      <input id="addToCart" class="btn btn-primary" type="button" value="Add to Cart" role="button" />
+      <input id="addReview" class="btn btn-primary" type="button" value="Add Review" role="button" />
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <th>Reviewer</th>
+        <th>Rating</th>
+        <th>Comment</th>
+      </thead>
+      <tbody id="reviewTable">
+        <% for(var i =0; i<info.reviews.length ;i++) {%>
+          <% if(i >= 3) { %>
+            <tr class="reviews hide" >
+          <% } else {%>
+            <tr class="reviews" >
+          <% } %>
+          <td class="id hide"><%= info.reviews[i].id %></td>
+          <td class="reviewer fit"> <%= info.reviews[i].reviewer %></td>
+          <td class="rating"> <%= info.reviews[i].rating %></td>
+          <% if(info.reviews[i].comment.length > 200) { %>
+            <td class="partialComment "> <%= info.reviews[i].comment.substring(0,200) %> <p class="textComment"> (Show More) </p> </td>
+            <td class="fullComment hide"> <%= info.reviews[i].comment %> <p class="textComment"> (Show Less) </p> </td>
+          <% } else {%>
+            <td class="comment"> <%= info.reviews[i].comment %></td>
+          <% } %>
+        </tr>
+        <% } if(info.reviews.length > 3) {%>
+          <tr>
+            <td class="showMoreReviews" colspan=2><p class="textComment">show more reviews</p></td>
+            <td class="showLessReviews hide" colspan=3><p class="textComment">show less reviews</p></td>
+            <td></td>
+          </tr>
+        <% } else if(info.reviews.length == 0) {%>
+          <tr class="reviews" id="noReviews">
+            <td colspan=3> No Reviews Yet</td>
+          </tr>
+        <% } %>
+
+      </tbody>
+    </table>
+  </div>
+</div>

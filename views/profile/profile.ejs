@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="/js/jquery-3.6.0.js"></script>
+		<script type="text/javascript" src="/bootstrap-3.4.1-dist/js/bootstrap.js"></script>
+		<link rel="stylesheet" type="text/css" href="/bootstrap-3.4.1-dist/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="/css/register.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="/css/main.css" media="screen" />
+		<script type="text/javascript" src="/js/profile.js"></script>
+		<title>Profile</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"></button>
+					<a class="navbar-brand" href="/">PhoneZone</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/checkout">Check out</a></li>
+						<li><a href="/users/signout" id="signout">Sign out</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="userInfo">
+				<h2>Profile</h2>
+
+				<div id="tabDiv">
+					<ul id="profileTab" class="nav nav-tabs" style="padding: 10px;">
+						<li class="active">
+							<a href="#editProfileTab" data-toggle="tab">Edit Profile</a>
+						</li>
+						<li>
+							<a href="#editPasswordTab" data-toggle="tab">Edit Password</a>
+						</li>
+						<li>
+							<a href="#addNewListingTab" data-toggle="tab">Add New Phone</a>
+						</li>
+					</ul>
+				</div>
+				<div id="tabContent" class="tab-content">
+					<%- include('editProfile') %>
+					<%- include('editPassword') %>
+					<%- include('addNewListing') %>
+				</div>
+			</div>
+
+			<div id="phoneList">
+				<legend style="margin-top: 15px;">My Phone List</legend>
+				<div id="modifyListError"></div>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<th>Title</th>
+							<th>Brand</th>
+							<th>Image</th>
+							<th>Avaliable Stock</th>
+							<th>Seller</th>
+							<th>Price</th>
+							<th>Status</th>
+							<th>Update Status</th>
+							<th>Remove</th>
+						</thead>
+						<tbody id="phoneListBody">
+							<% if (items.length > 0) { %>
+								<% for(var i=0;i<items.length;i++) {%>
+									<tr id="<%=items[i]._id %>_listing_<%=items[i].disabled%>" class="phoneListItem">
+										<td class="title"><%= items[i].title %></td>
+										<td class="brand"><%= items[i].brand %></td>
+										<td class="image"><img src=<%=items[i].image %> onerror="this.onerror=null;this.src='/images/phone_default_images/default.png';" alt="" class="thumbnail"></td>
+										<td class="stock"><%= items[i].stock %></td>
+										<td class="seller"><%= items[i].seller %></td>
+										<td class="price"><%= items[i].price %></td>
+										<td class="disabled">
+											<b><%= items[i].disabled %></b>
+
+										</td>
+										<td>
+											<div>
+												<% if (items[i].disabled == 'Disabled') { %>
+													<input class="disableBtn btn btn-success btn-xs" type="button" value="Enable" role="button" />
+												<% } else { %>
+													<input class="disableBtn btn btn-danger btn-xs" type="button" value="Disable" role="button" />
+												<% } %>
+
+											</div>
+										</td>
+										<td>
+											<div>
+												<input class="removeBtn btn btn-primary btn-xs" type="button" value="Remove" role="button" />
+											</div>
+										</td>
+										<td></td>
+								  </tr>
+								<% } %>
+
+							<% } else {%>
+								<td colspan="9" style="text-align: center;">You do not have anything listed yet.</td>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div id="reviewedItems">
+				<legend style="margin-top: 15px;">My Reviews</legend>
+				<div id="modifyReviewedError"></div>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<th>Title</th>
+							<th>Brand</th>
+							<th>Image</th>
+							<th>Status</th>
+							<th>Rating</th>
+							<th>Comment</th>
+
+						</thead>
+						<tbody id="reviewedItemsBody">
+							<% if (reviewedItems.length > 0) { %>
+								<% for(var i=0;i<reviewedItems.length;i++) {%>
+									<tr id="<%=reviewedItems[i].id %>_review_<%=reviewedItems[i].status%>" class="reviewedItem">
+										<td rowspan=<%= reviewedItems[i].numReviews %> class="title"><%= reviewedItems[i].title %></td>
+										<td rowspan=<%= reviewedItems[i].numReviews %> class="brand"><%= reviewedItems[i].brand %></td>
+										<td rowspan=<%= reviewedItems[i].numReviews %> class="image"><img src=<%=reviewedItems[i].image %> onerror="this.onerror=null;this.src='/images/phone_default_images/default.png';" alt="" class="thumbnail"></td>
+										<td rowspan=<%= reviewedItems[i].numReviews %> class="status"><b><%= reviewedItems[i].status %></b></td>
+										<% for(var j=0;j<reviewedItems[i].reviews.length;j++) {%>
+											<td class="Rating"><%= reviewedItems[i].reviews[j].rating %></td>
+											<td class="Comment"><%= reviewedItems[i].reviews[j].comment %></td>
+											<% if(j < reviewedItems[i].numReviews) {%>
+											</tr>
+											<%} if(j>0 && j < reviewedItems[i].numReviews - 1){%>
+												<tr>
+											<%}%>
+										<%}%>
+
+									</tr>
+								<% } %>
+
+							<% } else {%>
+								<td colspan="5" style="text-align: center;">You do not have any reviews yet.</td>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal fade" id="signoutModal" tabindex="-1" role="dialog" aria-labelledby="signoutModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h3 class="modal-title" id="signoutModalLabel">Do you want to sign out?</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="close"></button>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<input id="confirmsignoutBtn" class="btn btn-primary" type="button" value="Confirm" role="button"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%- include('../modalCommon') %>
+	</body>
+</html>
